@@ -646,7 +646,7 @@
     UIViewController *viewControllerWillDisappear = [self viewControllerWillDisappearForSuccessfulOperation:operation];
     
     [viewControllerWillAppear    beginAppearanceTransition:YES animated:_isAnimated];
-    [viewControllerWillDisappear beginAppearanceTransition:NO animated:_isAnimated];
+    [viewControllerWillDisappear beginAppearanceTransition:NO animated:NO];
 }
 
 - (void)endAppearanceTransitionForOperation:(ECSlidingViewControllerOperation)operation isCancelled:(BOOL)canceled {
