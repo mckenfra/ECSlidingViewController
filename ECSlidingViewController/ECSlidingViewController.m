@@ -28,7 +28,7 @@
 #import "ECSlidingSegue.h"
 
 @interface ECSlidingViewController()
-@property (nonatomic, assign) ECSlidingViewControllerOperation currentOperation;
+@property (nonatomic, assign, readwrite) ECSlidingViewControllerOperation currentOperation;
 @property (nonatomic, strong) ECSlidingAnimationController *defaultAnimationController;
 @property (nonatomic, strong) ECSlidingInteractiveTransition *defaultInteractiveTransition;
 @property (nonatomic, strong) id<UIViewControllerAnimatedTransitioning> currentAnimationController;

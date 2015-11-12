@@ -284,6 +284,11 @@
 @property (nonatomic, assign, readonly) ECSlidingViewControllerTopViewPosition currentTopViewPosition;
 
 /**
+ The current operation.
+ */
+@property (nonatomic, assign, readonly) ECSlidingViewControllerOperation currentOperation;
+
+/**
  The gesture that triggers the default interactive transition for a horizontal swipe. This is typically added to the top view or one of the top view's subviews.
  */
 @property (nonatomic, strong, readonly) UIPanGestureRecognizer *panGesture;
