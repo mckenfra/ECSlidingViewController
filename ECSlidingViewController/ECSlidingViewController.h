@@ -59,7 +59,7 @@
  
  @param slidingViewController The sliding view controller that is being transitioned.
  @param operation The type of transition that is occuring. See `ECSlidingViewControllerOperation` for a list of possible values.
- @param topViewController
+ @param topViewController The view controller in the 'top' position
  
  @return The animator object responsible for managing the transition animations, or nil if you want to use the standard sliding view controller transitions. The object you return must conform to the `UIViewControllerAnimatedTransitioning` protocol.
  */
