@@ -278,9 +278,11 @@
     _underLeftViewController = underLeftViewController;
     
     if (_underLeftViewController) {
-        // Ensure correct translation of autoresizingMask into constraints
+        // Ensure correct translation of autoresizingMask into Auto Layout constraints
         // (avoid "Unable to simultaneously satisfy constraints" during rotation).
+        // Also ensures width is never (temporarily) incorrect during rotation.
         _underLeftViewController.view.autoresizingMask |= UIViewAutoresizingFlexibleRightMargin;
+        _underLeftViewController.view.autoresizingMask &= ~UIViewAutoresizingFlexibleWidth;
 
         [self addChildViewController:_underLeftViewController];
         [_underLeftViewController didMoveToParentViewController:self];
@@ -299,9 +301,11 @@
     _underRightViewController = underRightViewController;
     
     if (_underRightViewController) {
-        // Ensure correct translation of autoresizingMask into constraints
+        // Ensure correct translation of autoresizingMask into Auto Layout constraints
         // (avoid "Unable to simultaneously satisfy constraints" during rotation).
+        // Also ensures width is never (temporarily) incorrect during rotation.
         _underRightViewController.view.autoresizingMask |= UIViewAutoresizingFlexibleLeftMargin;
+        _underRightViewController.view.autoresizingMask &= ~UIViewAutoresizingFlexibleWidth;
         
         [self addChildViewController:_underRightViewController];
         [_underRightViewController didMoveToParentViewController:self];
