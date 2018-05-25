@@ -42,13 +42,13 @@
 @property (nonatomic, assign) BOOL isAnimated;
 @property (nonatomic, assign) BOOL isInteractive;
 @property (nonatomic, assign) BOOL transitionInProgress;
-@property (nonatomic, copy) void (^animationComplete)();
+@property (nonatomic, copy) void (^animationComplete)(void);
 @property (nonatomic, copy) void (^coordinatorAnimations)(id<UIViewControllerTransitionCoordinatorContext>context);
 @property (nonatomic, copy) void (^coordinatorCompletion)(id<UIViewControllerTransitionCoordinatorContext>context);
 @property (nonatomic, copy) void (^coordinatorInteractionEnded)(id<UIViewControllerTransitionCoordinatorContext>context);
 - (void)setup;
 
-- (void)moveTopViewToPosition:(ECSlidingViewControllerTopViewPosition)position animated:(BOOL)animated onComplete:(void(^)())complete;
+- (void)moveTopViewToPosition:(ECSlidingViewControllerTopViewPosition)position animated:(BOOL)animated onComplete:(void(^)(void))complete;
 - (CGRect)topViewCalculatedFrameForPosition:(ECSlidingViewControllerTopViewPosition)position;
 - (CGRect)underLeftViewCalculatedFrameForTopViewPosition:(ECSlidingViewControllerTopViewPosition)position;
 - (CGRect)underRightViewCalculatedFrameForTopViewPosition:(ECSlidingViewControllerTopViewPosition)position;
@@ -70,6 +70,13 @@
 @synthesize topViewController=_topViewController;
 @synthesize underLeftViewController=_underLeftViewController;
 @synthesize underRightViewController=_underRightViewController;
+
+- (BOOL)isInterruptible {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"%s is not supported by %@", __PRETTY_FUNCTION__, NSStringFromClass([self class])] userInfo:nil];
+}
+- (CGAffineTransform)targetTransform {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"%s is not supported by %@", __PRETTY_FUNCTION__, NSStringFromClass([self class])] userInfo:nil];
+}
 
 #pragma mark - Constructors
 
@@ -125,6 +132,8 @@
     if (self.underRightViewControllerStoryboardId) {
         self.underRightViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.underRightViewControllerStoryboardId];
     }
+    
+    [super awakeFromNib];
 }
 
 - (void)viewDidLoad {
@@ -443,21 +452,21 @@
     [self resetTopViewAnimated:animated onComplete:nil];
 }
 
-- (void)anchorTopViewToRightAnimated:(BOOL)animated onComplete:(void (^)())complete {
+- (void)anchorTopViewToRightAnimated:(BOOL)animated onComplete:(void (^)(void))complete {
     [self moveTopViewToPosition:ECSlidingViewControllerTopViewPositionAnchoredRight animated:animated onComplete:complete];
 }
 
-- (void)anchorTopViewToLeftAnimated:(BOOL)animated onComplete:(void (^)())complete {
+- (void)anchorTopViewToLeftAnimated:(BOOL)animated onComplete:(void (^)(void))complete {
     [self moveTopViewToPosition:ECSlidingViewControllerTopViewPositionAnchoredLeft animated:animated onComplete:complete];
 }
 
-- (void)resetTopViewAnimated:(BOOL)animated onComplete:(void(^)())complete {
+- (void)resetTopViewAnimated:(BOOL)animated onComplete:(void(^)(void))complete {
     [self moveTopViewToPosition:ECSlidingViewControllerTopViewPositionCentered animated:animated onComplete:complete];
 }
 
 #pragma mark - Private
 
-- (void)moveTopViewToPosition:(ECSlidingViewControllerTopViewPosition)position animated:(BOOL)animated onComplete:(void(^)())complete {
+- (void)moveTopViewToPosition:(ECSlidingViewControllerTopViewPosition)position animated:(BOOL)animated onComplete:(void(^)(void))complete {
     self.isAnimated = animated;
     self.animationComplete = complete;
     [self.view endEditing:YES];
